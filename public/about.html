@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Про нас</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <script src="feedbacks.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    body.hidden { display: none; }
+    body *:not(button):not(.nav-button) {
+      font-family: 'Patrick Hand', cursive;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img id="avatarImage" alt="Аватар" class="avatar2">
+  <div class="user-email" id="userEmail">email@example.com</div>
+  <button id="authButton" class="logout-btn nav-button"></button>
+</div>
+
+<!-- Кнопка відкриття меню -->
+<button id="menuToggle" class="nav-button">☰ Меню</button>
+
+<!-- Бокове меню -->
+<div id="sideMenu" class="side-menu">
+  <a href="/" class="nav-button">Головна</a>
+  <a href="/profile.html" class="nav-button">Профіль</a>
+  <a href="/users.html" class="nav-button">Всі користувачі</a>
+  <a href="/about.html" class="nav-button">Відгуки</a>
+
+  <button id="createMeetingToggle" class="nav-button submenu-toggle">
+    Зустрічі ▼
+  </button>
+  <div id="createMeetingSubmenu" class="submenu">
+    <a href="/create-meeting.html" class="nav-button">➕ Нова зустріч</a>
+    <a href="/meetings.html" class="nav-button">📋 Всі зустрічі</a>
+  </div>
+</div>
+
+<a href="/" class="floating-logo">
+  <img src="logo.png" alt="Логотип">
+</a>
+
+<section class="feedback-form  ">
+  <h4>Залиште свій відгук</h4>
+  <form id="feedbackForm">
+       <div class="info-row">
+    <label for="name">Ваше ім'я:</label>
+        </div>
+    <input type="text" id="name" name="name" required>
+      <div class="info-row">
+    <label for="feedback">Ваш відгук:</label>
+     </div>
+    <textarea id="feedback" name="feedback" rows="4" required></textarea>
+   <div class="info-row">
+    <label for="rating">Ваша оцінка:</label>
+     </div>
+    <div id="rating" class="star-rating">
+ <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+  <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+  <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+  <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+  <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+    </div>
+
+    <button type="submit" class="glow-button nav-button ">Надіслати</button>
+  </form>
+
+  <div id="message" style="display:none;">
+    <h3>Дякуємо за ваш відгук!</h3>
+  </div>
+</section>
+
+<section id="feedbackSection">
+  <h4>Відгуки користувачів</h4>
+  <div id="feedbackList"></div>
+</section>
+
+<div id="spinner" class="spinner" style="display:none;">Завантаження</div>
+
+  <script src="/script.js"></script>
+</body>
+</html>
