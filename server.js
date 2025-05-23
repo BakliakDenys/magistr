@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const profileRoutes = require('./public/profile');
+const { router: profileRouter } = require('./public/profile');
 const authRoutes = require('./authRoutes');
 const meetingsModule = require('./public/meetings');
+const chatRoutes = require('./public/chat');
 const meetings = meetingsModule.router;
 const Meeting = meetingsModule.Meeting;
-
+const matchRoutes = require('./public/match');
 // Підключення до MongoDB Atlas
 async function connectToDB() {
   try {
@@ -27,11 +28,13 @@ app.use(express.static('public')); // HTML, CSS, JS
 
 // Авторизація та профіль
 app.use('/api/auth', authRoutes);
-app.use('/api', profileRoutes);
+app.use('/api', profileRouter);
 
 // Зустріч
 app.use('/uploads', express.static('uploads'));
 app.use('/api/meetings', meetings);
+app.use('/api/messages', chatRoutes);
+app.use('/api', matchRoutes);
 
 
 // Відгуки
@@ -104,6 +107,8 @@ app.delete('/api/meetings/:id', async (req, res) => {
     res.status(500).json({ message: 'Помилка сервера' });
   }
 });
+
+
 
 // Запуск
 const PORT = 3000;

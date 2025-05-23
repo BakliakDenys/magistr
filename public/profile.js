@@ -19,10 +19,28 @@ const profileSchema = new mongoose.Schema({
   country: String,
   hobby: String,
   birthdate: String,
-  avatarUrl: String // нове поле
-});
+  avatarUrl: String, // нове поле
 
-const Profile = mongoose.model('Profile', profileSchema);
+  badge: { type: String, enum: ['mentor', 'startup'] },
+
+  startupData: {
+    startupName: String,
+    industry: String,
+    stage: { type: String, enum: ['ідея', 'MVP', 'масштабування'] },
+    needs: [String],
+    description: String
+  },
+
+  mentorData: {
+    experience: String,
+    industries: [String],
+    comfortableStages: [String],
+    requestTypes: [String],
+    description: String
+  }
+
+});
+const Profile = mongoose.model('profile', profileSchema);
 
 // --- Налаштування multer ---
 const uploadDir = path.join(__dirname, '../public/uploads');
@@ -53,13 +71,22 @@ router.get('/profile', authMiddleware, async (req, res) => {
 
 // --- POST профілю ---
 router.post('/profile', authMiddleware, async (req, res) => {
-  const { firstName, lastName, city, country, hobby, birthdate } = req.body;
-  const email = req.user.email;
+  const {
+    firstName, lastName, city, country, hobby, birthdate,
+    badge, startupData, mentorData
+  } = req.body;
+
+  const updateData = {
+    firstName, lastName, city, country, hobby, birthdate, badge
+  };
+
+  if (badge === 'startup') updateData.startupData = startupData;
+  if (badge === 'mentor') updateData.mentorData = mentorData;
 
   try {
     const profile = await Profile.findOneAndUpdate(
-      { email },
-      { firstName, lastName, city, country, hobby, birthdate },
+      { email: req.user.email },
+      updateData,
       { new: true, upsert: true }
     );
     res.json(profile);
@@ -85,7 +112,10 @@ router.post('/profile/photo', authMiddleware, upload.single('avatar'), async (re
   }
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  Profile
+};
 
 // --- ВСІ КОРИСТУВАЧІ ---
 router.get('/profiles', authMiddleware, async (req, res) => {

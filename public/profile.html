@@ -23,6 +23,7 @@
   <a href="/profile.html" class="nav-button">Профіль</a>
   <a href="/users.html" class="nav-button">Всі користувачі</a>
   <a href="/about.html" class="nav-button">Відгуки</a>
+    <a href="/mentor-matches.html" class="nav-button" id="recommendBtn">Рекомендовані проєкти</a>
   <button id="createMeetingToggle" class="nav-button submenu-toggle">
     Зустрічі ▼
   </button>
@@ -87,6 +88,41 @@
           <label for="birthdate">Дата народження</label>
           <input type="date" id="birthdate">
         </div>
+          <div class="info-row">
+            <label for="badge">Роль</label>
+            <select id="badge" name="badge" required>
+              <option value="">   Оберіть роль   </option>
+              <option value="startup">Стартапер</option>
+              <option value="mentor">Ментор</option>
+            </select>
+          </div>
+
+          <!-- Стартапер -->
+          <div id="startupFields" style="display: none;">
+            <div class="info-row"><label>Назва стартапу</label><input type="text" id="startupName"></div>
+            <div class="info-row"><label>Галузь</label><input type="text" id="startupIndustry"></div>
+            <div class="info-row">
+              <label>Етап стартапу</label>
+              <select id="startupStage">
+                <option value="">   Обери етап   </option>
+                <option value="pre-seed">pre-seed</option>
+                <option value="seed">seed</option>
+                <option value="MVP">MVP</option>
+                <option value="growth">growth</option>
+              </select>
+            </div>
+            <div class="info-row"><label>Основна потреба</label><input type="text" id="startupNeeds" placeholder="маркетинг, інвестиції..."></div>
+            <div class="info-row"><label>Короткий опис</label><textarea id="startupDescription"></textarea></div>
+          </div>
+
+          <!-- Ментор -->
+          <div id="mentorFields" style="display: none;">
+            <div class="info-row"><label>Досвід менторства</label><textarea id="mentorExperience"></textarea></div>
+            <div class="info-row"><label>Галузі</label><input type="text" id="mentorIndustries" placeholder="наприклад: IT, освіта"></div>
+            <div class="info-row"><label>Етапи</label><input type="text" id="mentorStages" placeholder="ідея, MVP..."></div>
+            <div class="info-row"><label>Типи запитів</label><input type="text" id="mentorRequests" placeholder="маркетинг, фандрейзинг..."></div>
+            <div class="info-row"><label>Короткий опис</label><textarea id="mentorDescription"></textarea></div>
+          </div>
 
         <button type="submit" id="saveBtn" class="nav-button">Зберегти</button>
       </form>
@@ -99,6 +135,7 @@
       const fileName = this.files[0]?.name || 'Файл не вибрано';
       document.getElementById('fileName').textContent = fileName;
     });
+
   </script>
 
   <script src="/profileClient.js"></script>

@@ -239,3 +239,28 @@ function logout() {
       link.classList.add('active');
     }
   });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    fetch('/api/profile', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(profile => {
+        const recommendBtn = document.getElementById('recommendBtn');
+        if (!recommendBtn) return;
+
+        if (profile.badge === 'mentor') {
+          recommendBtn.classList.add('glow');
+        } else if (profile.badge === 'startup') {
+          recommendBtn.style.display = 'none';
+        }
+      })
+      .catch(err => {
+        console.error('Помилка при отриманні профілю:', err);
+      });
+  });
